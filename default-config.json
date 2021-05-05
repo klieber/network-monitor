@@ -1,1 +1,1 @@
-{ "schedule": "*/5 * * * * *", "urls": ["https://google.com"] }
+{ "schedule": "*/5 * * * * *", "urls": ["http://142.250.191.142"] }
