@@ -8,15 +8,13 @@ const { CronJob } = require('cron');
 
   const config = JSON.parse(configFile);
 
-  const job = new CronJob(config.schedule, async () =>
-    config.urls.forEach(async (url) => {
-      try {
-        logger.debug(`checking ${url}`);
-        await axios.head(url);
-      } catch (error) {
-        logger.error(`unable to resolve: ${url}`);
-      }
-    })
-  );
+  const job = new CronJob(config.schedule, async () => {
+    try {
+      await Promise.all(config.urls.map((url) => axios.head(url)));
+      logger.info('network is up');
+    } catch (error) {
+      logger.error('network is down');
+    }
+  });
   job.start();
 })();
